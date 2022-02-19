@@ -1,0 +1,161 @@
+# device info
+INFO:root:[Service] 00001800-0000-1000-8000-00805f9b34fb (Handle: 1): Generic Access Profile
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0002 : bytearray(b'GxTimer_31A0')
+INFO:root:      [Characteristic] 00002a00-0000-1000-8000-00805f9b34fb (Handle: 2):  (read), Value: b'GxTimer_31A0'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0004 : bytearray(b'\x00\x00')
+INFO:root:      [Characteristic] 00002a01-0000-1000-8000-00805f9b34fb (Handle: 4):  (read), Value: b'\x00\x00'
+
+# indicate only
+INFO:root:[Service] 00001801-0000-1000-8000-00805f9b34fb (Handle: 12): Generic Attribute Profile
+INFO:root:      [Characteristic] 00002a05-0000-1000-8000-00805f9b34fb (Handle: 13):  (indicate), Value: None
+DEBUG:bleak.backends.winrt.client:Read Descriptor 000F : bytearray(b'\x02\x00')
+INFO:root:              [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 15): Client Characteristic Configuration) | Value: b'\x02\x00'
+
+# device info
+INFO:root:[Service] 0000180a-0000-1000-8000-00805f9b34fb (Handle: 16): Device Information
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0011 : bytearray(b'\xba\x03\xc4\x00\x00/1\xa0')
+INFO:root:      [Characteristic] 00490220-0147-7070-4121-01d002290078 (Handle: 17):  (read), Value: b'\xba\x03\xc4\x00\x00/1\xa0'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0013 : bytearray(b'Tv5.11u_20210115_EP\x00\x00')
+INFO:root:      [Characteristic] 00002a26-0000-1000-8000-00805f9b34fb (Handle: 19):  (read), Value: b'Tv5.11u_20210115_EP\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0015 : bytearray(b'RSBRS02ABR\x00\x00')
+INFO:root:      [Characteristic] 00002a27-0000-1000-8000-00805f9b34fb (Handle: 21):  (read), Value: b'RSBRS02ABR\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0017 : bytearray(b'RFstar\x00\x00')
+INFO:root:      [Characteristic] 00002a29-0000-1000-8000-00805f9b34fb (Handle: 23):  (read), Value: b'RFstar\x00\x00'
+
+# UART (data transmission?)
+INFO:root:[Service] 6e400001-b5a3-f393-e0a9-e50e24dcca9e (Handle: 25): Nordic UART Service
+INFO:root:      [Characteristic] 6e400003-b5a3-f393-e0a9-e50e24dcca9e (Handle: 26): RX CHAR (notify), Value: None
+DEBUG:bleak.backends.winrt.client:Read Descriptor 001C : bytearray(b'RX CHAR\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 28): Characteristic User Description) | Value: b'RX CHAR\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 001D : bytearray(b'\x01X')
+INFO:root:              [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 29): Client Characteristic Configuration) | Value: b'\x01X'
+INFO:root:      [Characteristic] 6e400002-b5a3-f393-e0a9-e50e24dcca9e (Handle: 30): TX CHAR (write-without-response,write), Value: None
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0020 : bytearray(b'TX CHAR\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 32): Characteristic User Description) | Value: b'TX CHAR\x00'
+
+# password stuff
+INFO:root:[Service] 0000ffc0-0000-1000-8000-00805f9b34fb (Handle: 33): Vendor specific
+INFO:root:      [Characteristic] 0000ffc1-0000-1000-8000-00805f9b34fb (Handle: 34): Password (write-without-response), Value: None
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0024 : bytearray(b'Password\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 36): Characteristic User Description) | Value: b'Password\x00\x00'
+INFO:root:      [Characteristic] 0000ffc2-0000-1000-8000-00805f9b34fb (Handle: 37): Password Set Event (notify), Value: None
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0027 : bytearray(b'\x01a')
+INFO:root:              [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 39): Client Characteristic Configuration) | Value: b'\x01a'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0028 : bytearray(b'Password Set Event\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 40): Characteristic User Description) | Value: b'Password Set Event\x00\x00'
+
+# more device info?
+INFO:root:[Service] 0000ff90-0000-1000-8000-00805f9b34fb (Handle: 41): Vendor specific
+DEBUG:bleak.backends.winrt.client:Read Characteristic 002A : bytearray(b'GxTimer_31A0')
+INFO:root:      [Characteristic] 0000ff91-0000-1000-8000-00805f9b34fb (Handle: 42): Device Name (read,write-without-response,write), Value: b'GxTimer_31A0'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 002C : bytearray(b'Device Name\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 44): Characteristic User Description) | Value: b'Device Name\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 002D : bytearray(b'\x00')
+INFO:root:      [Characteristic] 0000ff92-0000-1000-8000-00805f9b34fb (Handle: 45): Connect Interval (read,write-without-response,write), Value: b'\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 002F : bytearray(b'Connect Interval\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 47): Characteristic User Description) | Value: b'Connect Interval\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0030 : bytearray(b'\x01')
+INFO:root:      [Characteristic] 0000ff93-0000-1000-8000-00805f9b34fb (Handle: 48): Uart BPS (read,write-without-response,write), Value: b'\x01'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0032 : bytearray(b'Uart BPS\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 50): Characteristic User Description) | Value: b'Uart BPS\x00\x00'
+INFO:root:      [Characteristic] 0000ff94-0000-1000-8000-00805f9b34fb (Handle: 51): Soft Reset (write-without-response,write), Value: None
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0035 : bytearray(b'Soft Reset\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 53): Characteristic User Description) | Value: b'Soft Reset\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0036 : bytearray(b'\x00')
+INFO:root:      [Characteristic] 0000ff95-0000-1000-8000-00805f9b34fb (Handle: 54): Advert Period (read,write-without-response,write), Value: b'\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0038 : bytearray(b'Advert Period\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 56): Characteristic User Description) | Value: b'Advert Period\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0039 : bytearray(b'RS')
+INFO:root:      [Characteristic] 0000ff96-0000-1000-8000-00805f9b34fb (Handle: 57): Product ID (read,write-without-response,write), Value: b'RS'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 003B : bytearray(b'Product ID\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 59): Characteristic User Description) | Value: b'Product ID\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 003C : bytearray(b'\x01')
+INFO:root:      [Characteristic] 0000ff97-0000-1000-8000-00805f9b34fb (Handle: 60): Transmit Power Level (read,write-without-response,write), Value: b'\x01'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 003E : bytearray(b'Transmit Power Level\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 62): Characteristic User Description) | Value: b'Transmit Power Level\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 003F : bytearray(b'!\x03\xba\x03\xc4/1\xa0\x01\x05\x00\x01\x00\x00')
+INFO:root:      [Characteristic] 0000ff98-0000-1000-8000-00805f9b34fb (Handle: 63): Advert Data Define (read,write-without-response,write), Value: b'!\x03\xba\x03\xc4/1\xa0\x01\x05\x00\x01\x00\x00'        
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0041 : bytearray(b'Advert Data Define\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 65): Characteristic User Description) | Value: b'Advert Data Define\x00\x00'
+
+# input/output
+INFO:root:[Service] 0000fff0-0000-1000-8000-00805f9b34fb (Handle: 66): Vendor specific
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0043 : bytearray(b'\x00')
+INFO:root:      [Characteristic] 0000fff1-0000-1000-8000-00805f9b34fb (Handle: 67): Config for port (read,write-without-response,write), Value: b'\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0045 : bytearray(b'Config for port\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 69): Characteristic User Description) | Value: b'Config for port\x00\x00'
+INFO:root:      [Characteristic] 0000fff2-0000-1000-8000-00805f9b34fb (Handle: 70): Output Bit (write-without-response,write), Value: None
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0048 : bytearray(b'Output Bit\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 72): Characteristic User Description) | Value: b'Output Bit\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0049 : bytearray(b'\x00')
+# this seems like the one vvv
+INFO:root:      [Characteristic] 0000fff3-0000-1000-8000-00805f9b34fb (Handle: 73): Input Bit (read,notify), Value: b'\x00'
+#
+DEBUG:bleak.backends.winrt.client:Read Descriptor 004B : bytearray(b'Input Bit\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 75): Characteristic User Description) | Value: b'Input Bit\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 004C : bytearray(b'\x00n')
+INFO:root:              [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 76): Client Characteristic Configuration) | Value: b'\x00n'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 004D : bytearray(b'\x00\x00\x00\x00')
+
+INFO:root:      [Characteristic] 0000fff4-0000-1000-8000-00805f9b34fb (Handle: 77): Delay1 for IO6 OverTurn (read,write-without-response,write), Value: b'\x00\x00\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 004F : bytearray(b'Delay1 for IO6 OverTurn\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 79): Characteristic User Description) | Value: b'Delay1 for IO6 OverTurn\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0050 : bytearray(b'\x00\x00\x00\x00')
+INFO:root:      [Characteristic] 0000fff5-0000-1000-8000-00805f9b34fb (Handle: 80): Delay2 for IO6 OverTurn (read,write-without-response,write), Value: b'\x00\x00\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0052 : bytearray(b'Delay2 for IO6 OverTurn\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 82): Characteristic User Description) | Value: b'Delay2 for IO6 OverTurn\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0053 : bytearray(b'\x00\x00\x00\x00')
+INFO:root:      [Characteristic] 0000fff6-0000-1000-8000-00805f9b34fb (Handle: 83): Delay1 for IO7 OverTurn (read,write-without-response,write), Value: b'\x00\x00\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0055 : bytearray(b'Delay1 for IO7 OverTurn\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 85): Characteristic User Description) | Value: b'Delay1 for IO7 OverTurn\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0056 : bytearray(b'\x00\x00\x00\x00')
+INFO:root:      [Characteristic] 0000fff7-0000-1000-8000-00805f9b34fb (Handle: 86): Delay2 for IO7 OverTurn (read,write-without-response,write), Value: b'\x00\x00\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0058 : bytearray(b'Delay2 for IO7 OverTurn\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 88): Characteristic User Description) | Value: b'Delay2 for IO7 OverTurn\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0059 : bytearray(b'\x00\x00\x00\x00')
+INFO:root:      [Characteristic] 0000fff8-0000-1000-8000-00805f9b34fb (Handle: 89): IO0 PULSE COUNT (read,notify), Value: b'\x00\x00\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 005B : bytearray(b'IO0 PULSE COUNT\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 91): Characteristic User Description) | Value: b'IO0 PULSE COUNT\x00\x00'
+
+# ADC (analog to digital converter)
+INFO:root:[Service] 0000ffd0-0000-1000-8000-00805f9b34fb (Handle: 92): Vendor specific
+DEBUG:bleak.backends.winrt.client:Read Characteristic 005D : bytearray(b'\x00')
+INFO:root:      [Characteristic] 0000ffd1-0000-1000-8000-00805f9b34fb (Handle: 93): Adc Switch (read,write-without-response,write), Value: b'\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 005F : bytearray(b'Adc Switch\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 95): Characteristic User Description) | Value: b'Adc Switch\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0060 : bytearray(b'\x01\xf4')
+INFO:root:      [Characteristic] 0000ffd2-0000-1000-8000-00805f9b34fb (Handle: 96): Adc Period (read,write-without-response,write), Value: b'\x01\xf4'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0062 : bytearray(b'Adc Period\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 98): Characteristic User Description) | Value: b'Adc Period\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0063 : bytearray(b'\x00\x00')
+INFO:root:      [Characteristic] 0000ffd3-0000-1000-8000-00805f9b34fb (Handle: 99): Adc Result (read,notify), Value: b'\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0065 : bytearray(b'Adc Result\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 101): Characteristic User Description) | Value: b'Adc Result\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0066 : bytearray(b'')
+INFO:root:              [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 102): Client Characteristic Configuration) | Value: b''
+
+# pwm stuff
+INFO:root:[Service] 0000ffb0-0000-1000-8000-00805f9b34fb (Handle: 103): Vendor specific
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0068 : bytearray(b'\x01')
+INFO:root:      [Characteristic] 0000ffb1-0000-1000-8000-00805f9b34fb (Handle: 104): Pwm Config (read,write-without-response,write), Value: b'\x01'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 006A : bytearray(b'Pwm Config\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 106): Characteristic User Description) | Value: b'Pwm Config\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 006B : bytearray(b'\xff\xff')
+INFO:root:      [Characteristic] 0000ffb2-0000-1000-8000-00805f9b34fb (Handle: 107): Pwm Out (read,write-without-response,write), Value: b'\xff\xff'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 006D : bytearray(b'Pwm Out\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 109): Characteristic User Description) | Value: b'Pwm Out\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 006E : bytearray(b'\x82\xff')
+INFO:root:      [Characteristic] 0000ffb3-0000-1000-8000-00805f9b34fb (Handle: 110): Pwm Clk (read,write-without-response,write), Value: b'\x82\xff'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0070 : bytearray(b'Pwm Clk\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 112): Characteristic User Description) | Value: b'Pwm Clk\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Characteristic 0071 : bytearray(b'\x00\x00')
+INFO:root:      [Characteristic] 0000ffb4-0000-1000-8000-00805f9b34fb (Handle: 113): Pwm Time (read,write-without-response,write), Value: b'\x00\x00'
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0073 : bytearray(b'Pwm Time\x00\x00')
+INFO:root:              [Descriptor] 00002901-0000-1000-8000-00805f9b34fb (Handle: 115): Characteristic User Description) | Value: b'Pwm Time\x00\x00'
+
+
+INFO:root:[Service] 0000fd00-0000-1000-8000-00805f9b34fb (Handle: 116): Vendor specific
+INFO:root:      [Characteristic] 0000fd01-0000-1000-8000-00805f9b34fb (Handle: 117):  (write-without-response), Value: None
+INFO:root:      [Characteristic] 0000fd02-0000-1000-8000-00805f9b34fb (Handle: 119):  (write-without-response,notify), Value: None
+DEBUG:bleak.backends.winrt.client:Read Descriptor 0079 : bytearray(b'\x00\x00')
+INFO:root:              [Descriptor] 00002902-0000-1000-8000-00805f9b34fb (Handle: 121): Client Characteristic Configuration) | Value: b'\x00\x00'
