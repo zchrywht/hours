@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect
+#from quart import Quart, render_template, request, redirect
 import asyncio
 from bleak import BleakClient
 from bleak import BleakScanner
@@ -36,8 +37,6 @@ COMMANDS = {
     "8" : bytes.fromhex("1F30 4138 09"),
     "9" : bytes.fromhex("1F30 4139 09"),
 }
-
-app = Flask(__name__)
 
 async def sendCommand(client, command):
     await client.write_gatt_char(IO_UUID, COMMANDS[command])
@@ -88,60 +87,81 @@ async def discover():
             if d.name:
                 print(d.name)
                 if "GxTimer_" in d.name:
-                    print("Timer Found")
+                    print("Timer Found at " + d.address)
                     return d.address
 
 async def run(address):
-    async with BleakClient(address) as client:
-        print("Pairing...")
-        paired = await client.pair()
-        print("Paired with timer.")
+    while True:
+        try:
+            async with BleakClient(address) as client:
+                print("Pairing with " + address)
+                paired = await client.pair()
+                print("Paired with timer.")
+                
+                await sendCommand(client, "power")
+                await asyncio.sleep(1)
+                await sendCommand(client, "power")
+                
+                #app = Quart(__name__)
+                app = Flask(__name__)
+                
+                print("app created")
 
-        @app.route('/')
-        def index():
-            return render_template('index.html')
+                @app.route('/')
+                def index():
+                    return render_template('index.html')
+                    
+                @app.route('/test', methods=['POST'])
+                async def test():
+                    print("test")
+                    return redirect('/')
 
-        @app.route('/power', methods=['POST'])
-        async def power():
-            await sendCommand(client, "power")
-            return redirect('/')
+                @app.route('/power', methods=['POST'])
+                async def power():
+                    await client.write_gatt_char(IO_UUID, COMMANDS["power"])
+                    #await sendCommand(client, "power")
+                    return redirect('/')
 
-        @app.route('/reset', methods=['POST'])
-        async def reset():
-            await sendCommand(client, "reset")
-            return redirect('/')
+                @app.route('/reset', methods=['POST'])
+                async def reset():
+                    await sendCommand(client, "reset")
+                    return redirect('/')
 
-        @app.route('/start', methods=['POST'])
-        async def start():
-            await sendCommand(client, "start")
-            return redirect('/')
+                @app.route('/start', methods=['POST'])
+                async def start():
+                    await sendCommand(client, "start")
+                    return redirect('/')
 
-        @app.route('/stop', methods=['POST'])
-        async def stop():
-            await sendCommand(client, "stop")
-            return redirect('/')
+                @app.route('/stop', methods=['POST'])
+                async def stop():
+                    await sendCommand(client, "stop")
+                    return redirect('/')
 
-        @app.route('/set-time', methods=['POST'])
-        async def time():
-            t = request.form['time']
-            await setTime(client, t)
-            return redirect('/')
+                @app.route('/set-time', methods=['POST'])
+                async def time():
+                    t = request.form['time']
+                    await setTime(client, t)
+                    return redirect('/')
 
-        @app.route('/cycle', methods=['POST'])
-        async def c():
-            start = request.form['startTime']
-            end = request.form['maxTime']
-            await setTime(client, start)
-            await cycle(client, start, end)
-            return redirect('/')
+                @app.route('/cycle', methods=['POST'])
+                async def c():
+                    start = request.form['startTime']
+                    end = request.form['maxTime']
+                    await setTime(client, start)
+                    await cycle(client, start, end)
+                    return redirect('/')
 
-        if __name__ == '__main__':
-            app.run(debug=False, host='0.0.0.0') # nothing after this will execute
+                if __name__ == '__main__':
+                    await app.run(debug=False, host='0.0.0.0') # nothing after this will execute
+                    
+        except Exception as e:
+            print(e)
 
 
 async def main():
+    print("finding address...")
     address = await discover()
-    print(address)
+    print("running...")
     await run(address)
 
 #async def setTime()

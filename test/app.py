@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, redirect
+#from flask import Flask, render_template, request, redirect
+from quart import Quart, render_template, request, redirect
 import asyncio
 from bleak import BleakClient, BleakScanner
+import nest_asyncio
+
+#nest_asyncio.apply()
 
 TIMER_NAME = "GxTimer_31A0"
 IO_UUID = "6E400002-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -46,21 +50,26 @@ async def main():
     while True:
         try:
             async with BleakClient(address) as client:
+
                 await client.pair()
 
-                app = Flask(__name__)
+                app = Quart(__name__)
 
                 @app.route('/')
                 def index():
                     return render_template('index.html')
 
                 @app.route('/power', methods=['POST'])
-                async def power():
-                    await client.write_gatt_char(IO_UUID, COMMANDS['power'])
+                def power():
+                    #loop = asyncio.get_event_loop()
+                    #print(loop)
+                    #asyncio.run_coroutine_threadsafe(sendCommand(client, "power"), loop)
+                    #await client.write_gatt_char(IO_UUID, COMMANDS['power'])
                     return redirect('/')
 
                 if __name__ == '__main__':
-                    app.run(debug=False, host='0.0.0.0') # nothing after this will execute
+                    await app.run_task(debug=False, host='0.0.0.0')
+                    #app.run(debug=False, host='0.0.0.0') # nothing after this will execute
 
         except Exception as e:
             print(e)
