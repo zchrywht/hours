@@ -31,11 +31,9 @@ async def sendCommand(command):
         "9" : bytes.fromhex("1F30 4139 09"),
     }
 
-    time.sleep(0.1)
+    await asyncio.sleep(0.2)
 
     await client.write_gatt_char(IO_UUID, COMMANDS[command])
-
-    time.sleep(0.1)
     
     return
 
@@ -136,13 +134,13 @@ def runReset(startTime, maxTime):
     print("setting time: " + startTime)
     setTime(startTime)
     print("starting...")
-    time.sleep(0.5)
+    time.sleep(2)
     threadCommand("start")
     cycleLengthSeconds = stringToSeconds(maxTime)
     startTimeSeconds = stringToSeconds(startTime)
     timeRemaining = cycleLengthSeconds - startTimeSeconds
     print("sleeping for " + str(timeRemaining) + " seconds")
-    loop.call_later(timeRemaining + 1.5, hardReset)
+    loop.call_later(timeRemaining + 1, hardReset)
 
     return
 
