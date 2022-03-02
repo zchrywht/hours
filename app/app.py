@@ -31,8 +31,6 @@ async def sendCommand(command):
         "9" : bytes.fromhex("1F30 4139 09"),
     }
 
-    await asyncio.sleep(0.2)
-
     await client.write_gatt_char(IO_UUID, COMMANDS[command])
     
     return
@@ -64,7 +62,7 @@ async def pair():
             print("pairing failed, retrying...")
             pass
 
-def stop():
+def end():
     disconnected = asyncio.run_coroutine_threadsafe(client.disconnect(), loop).result()
     loop.call_soon_threadsafe(loop.stop)
     while True:
@@ -107,23 +105,34 @@ def threadCommand(command) -> None:
 
 def hardReset() -> None:
     threadCommand("stop")
+    time.sleep(0.2)
     threadCommand("reset")
+    time.sleep(0.2)
     threadCommand("reset")
+    time.sleep(0.2)
 
 def cancelTasks() -> None:
-    allTasks = asyncio.all_tasks(loop)
-    print(allTasks)
-    for task in allTasks:
-        task.cancel()
+
+    global later
+    try:
+        if later:
+            later.cancel()
+    except:
+        pass
 
 def setTime(t):
     if len(t) == 6 and t.isnumeric():
         threadCommand("stop")
+        time.sleep(0.1)
         threadCommand("reset")
+        time.sleep(0.1)
         threadCommand("reset")
+        time.sleep(0.1)
         threadCommand("edit")
+        time.sleep(0.1)
         for i in range(len(t)):
             threadCommand(t[i])
+            time.sleep(0.1)
         threadCommand("enter")
         return True
     else:
@@ -131,22 +140,32 @@ def setTime(t):
 
 def runReset(startTime, maxTime):
 
-    print("setting time: " + startTime)
     setTime(startTime)
-    print("starting...")
     time.sleep(2)
     threadCommand("start")
+
     cycleLengthSeconds = stringToSeconds(maxTime)
     startTimeSeconds = stringToSeconds(startTime)
     timeRemaining = cycleLengthSeconds - startTimeSeconds
-    print("sleeping for " + str(timeRemaining) + " seconds")
-    loop.call_later(timeRemaining + 1, hardReset)
+
+    global later
+    later = loop.call_later(timeRemaining + 1, hardReset)
 
     return
 
 def cycle(startTime, maxTime):
-    while True:
-        runReset(startTime, maxTime)
+    hardReset()
+    setTime(startTime)
+    time.sleep(2)
+    threadCommand("start")
+
+    cycleLengthSeconds = stringToSeconds(maxTime)
+    startTimeSeconds = stringToSeconds(startTime)
+    timeRemaining = cycleLengthSeconds - startTimeSeconds
+
+    global later
+    later = loop.call_later(timeRemaining + 1, cycle, ("000000", maxTime))
+
 
 # define app
 app = Flask(__name__)
@@ -159,21 +178,25 @@ def index():
 
 @app.route('/power', methods=['POST'])
 def power():
+    cancelTasks()
     threadCommand("power")
     return redirect('/')
 
 @app.route('/reset', methods=['POST'])
 def reset():
+    cancelTasks()
     hardReset()
     return redirect('/')
 
 @app.route('/start', methods=['POST'])
 def start():
+    cancelTasks()
     threadCommand("start")
     return redirect('/')
 
 @app.route('/stop', methods=['POST'])
 def stop():
+    cancelTasks()
     threadCommand("stop")
     return redirect('/')
 
@@ -181,12 +204,14 @@ def stop():
 
 @app.route('/set', methods=['POST'])
 def set():
+    cancelTasks()
     t = request.form['time']
     setTime(t)
     return redirect('/')
 
 @app.route('/run', methods=['POST'])
 def run():
+    cancelTasks()
     start = request.form['startTime']
     end = request.form['maxTime']
     runReset(start, end)
@@ -194,6 +219,7 @@ def run():
 
 @app.route('/cycle', methods=['POST'])
 def cyc():
+    cancelTasks()
     start = request.form['startTime']
     end = request.form['maxTime']
     cycle(start, end)
@@ -202,4 +228,4 @@ def cyc():
 if __name__ == "__main__":
     begin()
     app.run(debug=False, host='0.0.0.0') # nothing after this will execute
-    stop()
+    end()
