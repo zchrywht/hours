@@ -1,9 +1,3 @@
-'''
-# call these to stop the background thread:
-loop.call_soon_threadsafe(loop.stop)
-loop.close()
-'''
-
 import asyncio
 from bleak import BleakClient, BleakScanner
 import time
@@ -37,7 +31,12 @@ async def sendCommand(command):
         "9" : bytes.fromhex("1F30 4139 09"),
     }
 
+    time.sleep(0.1)
+
     await client.write_gatt_char(IO_UUID, COMMANDS[command])
+
+    time.sleep(0.1)
+    
     return
 
 async def discover():
@@ -79,7 +78,7 @@ def start_background_loop(loop: asyncio.AbstractEventLoop) -> None:
     asyncio.set_event_loop(loop)
     loop.run_forever()
 
-def start() -> None:
+def begin() -> None:
     # create new event loop, assign to "background" thread, start
     global loop
     loop = asyncio.new_event_loop()
@@ -108,6 +107,17 @@ def stringToSeconds(t):
 def threadCommand(command) -> None:
     asyncio.run_coroutine_threadsafe(sendCommand(command), loop)
 
+def hardReset() -> None:
+    threadCommand("stop")
+    threadCommand("reset")
+    threadCommand("reset")
+
+def cancelTasks() -> None:
+    allTasks = asyncio.all_tasks(loop)
+    print(allTasks)
+    for task in allTasks:
+        task.cancel()
+
 def setTime(t):
     if len(t) == 6 and t.isnumeric():
         threadCommand("stop")
@@ -122,23 +132,19 @@ def setTime(t):
         return False
 
 def runReset(startTime, maxTime):
+
+    print("setting time: " + startTime)
     setTime(startTime)
+    print("starting...")
     time.sleep(0.5)
     threadCommand("start")
-    now = time.time()
     cycleLengthSeconds = stringToSeconds(maxTime)
     startTimeSeconds = stringToSeconds(startTime)
-    endTime = now + cycleLengthSeconds - startTimeSeconds
-    while True:
-        time.sleep(0.1)
-        now = time.time()
-        if now > endTime:
-            threadCommand("stop")
-            time.sleep(0.1)
-            threadCommand("reset")
-            time.sleep(0.1)
-            threadCommand("reset")
-            return
+    timeRemaining = cycleLengthSeconds - startTimeSeconds
+    print("sleeping for " + str(timeRemaining) + " seconds")
+    loop.call_later(timeRemaining + 1.5, hardReset)
+
+    return
 
 def cycle(startTime, maxTime):
     while True:
@@ -151,12 +157,51 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
+# basic commands 
+
 @app.route('/power', methods=['POST'])
 def power():
     threadCommand("power")
     return redirect('/')
 
+@app.route('/reset', methods=['POST'])
+def reset():
+    hardReset()
+    return redirect('/')
+
+@app.route('/start', methods=['POST'])
+def start():
+    threadCommand("start")
+    return redirect('/')
+
+@app.route('/stop', methods=['POST'])
+def stop():
+    threadCommand("stop")
+    return redirect('/')
+
+# routines
+
+@app.route('/set', methods=['POST'])
+def set():
+    t = request.form['time']
+    setTime(t)
+    return redirect('/')
+
+@app.route('/run', methods=['POST'])
+def run():
+    start = request.form['startTime']
+    end = request.form['maxTime']
+    runReset(start, end)
+    return redirect('/')
+
+@app.route('/cycle', methods=['POST'])
+def cyc():
+    start = request.form['startTime']
+    end = request.form['maxTime']
+    cycle(start, end)
+    return redirect('/')
+
 if __name__ == "__main__":
-    start()
+    begin()
     app.run(debug=False, host='0.0.0.0') # nothing after this will execute
     stop()

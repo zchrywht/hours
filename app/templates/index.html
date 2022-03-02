@@ -1,0 +1,54 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="{{ url_for('static',filename='styles/style.css') }}">
+    </head>
+
+    <body>
+        <div id="container">
+
+            <div class="section">
+                <form action="/power" method="post" class="basic">
+                    <input type="submit" name="power" value="POWER">
+                </form>
+                <br>
+                <form action="/reset" method="post" class="basic">
+                    <input type="submit" name="reset" value="RESET">
+                </form>
+                <form action="/start" method="post" class="basic">
+                    <input type="submit" name="start" value="START">
+                </form>
+                <form action="/stop" method="post" class="basic">
+                    <input type="submit" name="stop" value="STOP">
+                </form>
+            </div>
+
+            <div class="section">
+                <form action="/set" method="post" autocomplete="off">
+                    Set <br>
+                    <small>Manually set clock time.</small>
+                    <br>
+                    <input type="text" name="time" value="000000"></input>
+                    <input type="submit" name="stop" value="SET">
+                </form>
+                <form action="/run" method="post" autocomplete="off">
+                    Run
+                    <br>
+                    <small> Run clock up to a specific time, then reset to zero.</small>
+                    <br>
+                    <input type="text" name="startTime" value="000000"></input>
+                    <input type="text" name="maxTime" value="240000"></input>
+                    <input type="submit" value="START"></input>
+                </form>
+                <form action = "/cycle" method="post" autocomplete="off">
+                    Cycle <br>
+                    <small>Run clock up to a specific time, then restart from zero.</small>
+                    <br>
+                    <input type="text" name="startTime" value="000000"></input>
+                    <input type="text" name="maxTime" value="240000"></input>
+                    <input type="submit" value="START"></input>
+                </form>
+            </div>
+        </div>
+
+    </body>
+</html>
