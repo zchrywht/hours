@@ -27,7 +27,7 @@
                     Set <br>
                     <small>Manually set clock time.</small>
                     <br>
-                    <input type="text" name="time" value="000000"></input>
+                    <input type="text" name="time" value={{ set_time }}></input>
                     <input type="submit" name="stop" value="SET">
                 </form>
                 <form action="/run" method="post" autocomplete="off">
@@ -35,16 +35,8 @@
                     <br>
                     <small> Run clock up to a specific time, then reset to zero.</small>
                     <br>
-                    <input type="text" name="startTime" value="000000"></input>
-                    <input type="text" name="maxTime" value="240000"></input>
-                    <input type="submit" value="START"></input>
-                </form>
-                <form action = "/cycle" method="post" autocomplete="off">
-                    Cycle <br>
-                    <small>Run clock up to a specific time, then restart from zero.</small>
-                    <br>
-                    <input type="text" name="startTime" value="000000"></input>
-                    <input type="text" name="maxTime" value="240000"></input>
+                    <input type="text" name="startTime" value={{ run_start }}></input>
+                    <input type="text" name="maxTime" value= {{ run_end }}></input>
                     <input type="submit" value="START"></input>
                 </form>
             </div>

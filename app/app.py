@@ -2,7 +2,7 @@ import asyncio
 from bleak import BleakClient, BleakScanner
 import time
 from threading import Thread
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 
 TIMER_NAME = "GxTimer_31A0"
 
@@ -105,11 +105,11 @@ def threadCommand(command) -> None:
 
 def hardReset() -> None:
     threadCommand("stop")
-    time.sleep(0.2)
+    time.sleep(0.1)
     threadCommand("reset")
-    time.sleep(0.2)
+    time.sleep(0.1)
     threadCommand("reset")
-    time.sleep(0.2)
+    time.sleep(0.1)
 
 def cancelTasks() -> None:
 
@@ -122,12 +122,7 @@ def cancelTasks() -> None:
 
 def setTime(t):
     if len(t) == 6 and t.isnumeric():
-        threadCommand("stop")
-        time.sleep(0.1)
-        threadCommand("reset")
-        time.sleep(0.1)
-        threadCommand("reset")
-        time.sleep(0.1)
+        hardReset()
         threadCommand("edit")
         time.sleep(0.1)
         for i in range(len(t)):
@@ -141,7 +136,7 @@ def setTime(t):
 def runReset(startTime, maxTime):
 
     setTime(startTime)
-    time.sleep(2)
+    time.sleep(1)
     threadCommand("start")
 
     cycleLengthSeconds = stringToSeconds(maxTime)
@@ -149,30 +144,27 @@ def runReset(startTime, maxTime):
     timeRemaining = cycleLengthSeconds - startTimeSeconds
 
     global later
-    later = loop.call_later(timeRemaining + 1, hardReset)
+    later = loop.call_later(timeRemaining, threadCommand, "stop")
 
     return
 
-def cycle(startTime, maxTime):
-    hardReset()
-    setTime(startTime)
-    time.sleep(2)
-    threadCommand("start")
-
-    cycleLengthSeconds = stringToSeconds(maxTime)
-    startTimeSeconds = stringToSeconds(startTime)
-    timeRemaining = cycleLengthSeconds - startTimeSeconds
-
-    global later
-    later = loop.call_later(timeRemaining + 1, cycle, ("000000", maxTime))
-
-
 # define app
 app = Flask(__name__)
+app.secret_key = "oysterknife"
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if 'set_time' not in session:
+        session['set_time'] = '240000'
+    if 'run_start' not in session:
+        session['run_start'] = '000000'
+    if 'run_end' not in session:
+        session['run_end'] = '240000'
+
+    return render_template('index.html',
+        set_time = session['set_time'],
+        run_start = session['run_start'],
+        run_end = session['run_end'])
 
 # basic commands 
 
@@ -206,6 +198,7 @@ def stop():
 def set():
     cancelTasks()
     t = request.form['time']
+    session['set_time'] = t
     setTime(t)
     return redirect('/')
 
@@ -214,15 +207,9 @@ def run():
     cancelTasks()
     start = request.form['startTime']
     end = request.form['maxTime']
+    session['run_start'] = start
+    session['run_end'] = end
     runReset(start, end)
-    return redirect('/')
-
-@app.route('/cycle', methods=['POST'])
-def cyc():
-    cancelTasks()
-    start = request.form['startTime']
-    end = request.form['maxTime']
-    cycle(start, end)
     return redirect('/')
 
 if __name__ == "__main__":
