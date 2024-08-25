@@ -2,7 +2,7 @@ import asyncio
 from bleak import BleakClient, BleakScanner
 import time
 from threading import Thread
-from flask import Flask, render_template, request, redirect, session
+
 
 TIMER_NAME = "GxTimer_31A0"
 
@@ -148,71 +148,70 @@ def runReset(startTime, maxTime):
 
     return
 
-# define app
-app = Flask(__name__)
-app.secret_key = "oysterknife"
-
-@app.route('/')
-def index():
-    if 'set_time' not in session:
-        session['set_time'] = '240000'
-    if 'run_start' not in session:
-        session['run_start'] = '000000'
-    if 'run_end' not in session:
-        session['run_end'] = '240000'
-
-    return render_template('index.html',
-        set_time = session['set_time'],
-        run_start = session['run_start'],
-        run_end = session['run_end'])
-
-# basic commands 
-
-@app.route('/power', methods=['POST'])
 def power():
     cancelTasks()
     threadCommand("power")
-    return redirect('/')
 
-@app.route('/reset', methods=['POST'])
 def reset():
     cancelTasks()
     hardReset()
-    return redirect('/')
 
-@app.route('/start', methods=['POST'])
 def start():
     cancelTasks()
     threadCommand("start")
-    return redirect('/')
 
-@app.route('/stop', methods=['POST'])
 def stop():
     cancelTasks()
     threadCommand("stop")
-    return redirect('/')
 
-# routines
+'''
+# initialize
+timeLoop = True
+TM.segments
 
-@app.route('/set', methods=['POST'])
-def set():
-    cancelTasks()
-    t = request.form['time']
-    session['set_time'] = t
-    setTime(t)
-    return redirect('/')
+timeSet = False
 
-@app.route('/run', methods=['POST'])
-def run():
-    cancelTasks()
-    start = request.form['startTime']
-    end = request.form['maxTime']
-    session['run_start'] = start
-    session['run_end'] = end
-    runReset(start, end)
-    return redirect('/')
+maxDigits = [2,9,5,9,5,9] # highest number that each time digit needs to reach
+currentDigits = [0,0,0,0,0,0] # current state of each time digit
 
-if __name__ == "__main__":
-    begin()
-    app.run(debug=False, host='0.0.0.0') # nothing after this will execute
-    end()
+# main control buttons
+startButton = TM.switches[0]
+setButton = TM.switches[1]
+
+# time set buttons
+h1 = TM.switches[2]
+h2 = TM.switches[3]
+m1 = TM.switches[4]
+m2 = TM.switches[5]
+s1 = TM.switches[6]
+s2 = TM.switches[7]
+
+def increment(digit):
+    currentDigits[digit] = (currentDigits[digit] + 1) % maxDigits[digit]
+    TM.segments[digit + 2] = currentDigits[digit]
+
+def toggleLEDs():
+    
+
+def toggleLoop():
+    if timeLoop:
+        timeLoop = False
+        TM.segments[0] = 'S'
+    else:
+        timeLoop = True
+        TM.segments[0] = 'L'
+
+
+def toggleSet():
+    if timeSet = False:
+        timeSet = True
+    
+
+try:
+    while True:
+        
+
+'''
+
+begin()
+end()
