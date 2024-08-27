@@ -2,6 +2,7 @@ import asyncio
 from bleak import BleakClient, BleakScanner
 import time
 from threading import Thread
+from rpi_TM1638 import TMBoards
 
 
 TIMER_NAME = "GxTimer_31A0"
