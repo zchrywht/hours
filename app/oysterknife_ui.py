@@ -4,6 +4,7 @@ import board
 import digitalio
 import serial
 import adafruit_character_lcd.character_lcd as characterlcd
+from analog import getInput
 
 # Modify this if you have a different sized character LCD
 lcd_columns = 16
@@ -24,7 +25,7 @@ lcd = characterlcd.Character_LCD_Mono(
 )
 
 # Open the serial port (replace '/dev/ttyUSB0' with your correct port)
-ser = serial.Serial('/dev/ttyUSB0', 9600)
+#ser = serial.Serial('/dev/ttyUSB0', 9600)
 
 class Display():
     
@@ -216,12 +217,17 @@ class Clock():
     def run(self):
         self.updateDisplay()
         input = getInput()
+
+        # check if time limit is reached
         if self.running:
             if self.displayTime().total_seconds() >= 86400:
                 print("ending")
                 return self.end()
+            
+            # if not, update display
             else:
                 self.display.updateTime(self.displayTime())
+        
         if input:
             if self.editing:
                 return self.editMode(input)
@@ -229,9 +235,11 @@ class Clock():
                 return self.normalMode(input)
             
 
+'''
 def getInput():
     if ser.in_waiting > 0:  # Check if there's data available to read
         data = ser.readline().decode('utf-8').strip()  # Read and decode the data
         # print(f"Received: {data}")
         return data
     time.sleep(0.1)
+'''

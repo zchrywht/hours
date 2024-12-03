@@ -1,6 +1,6 @@
 import oysterknife_clock as okClock
 import oysterknife_ui as okUI
-
+import time
 
 clock = okUI.Clock()
 
@@ -26,3 +26,5 @@ while True:
             okClock.start()
         elif signal == "END":
             okClock.setTime("240000")
+    
+    time.sleep(0.1)
