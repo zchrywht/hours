@@ -1,8 +1,6 @@
-import time
 from datetime import datetime, timedelta
 import board
 import digitalio
-import serial
 import adafruit_character_lcd.character_lcd as characterlcd
 from analog import getInput
 
